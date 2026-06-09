@@ -1,0 +1,5 @@
+
+[00:05:51] === FINISH_SETUP3 START ===
+[00:05:53] C: free space: 775 MB
+[00:05:53] PG status: pg_ctl: no server running
+[00:05:53] Starting server (Start-Process, no pipe)...

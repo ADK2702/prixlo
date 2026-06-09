@@ -1,0 +1,61 @@
+
+[23:54:04] === FIX_SETUP2 START ===
+[23:54:06] C: free space: 567 MB
+[23:54:07] Starting SELECTIVE extraction of 322 MB zip (skipping pgAdmin4/doc/symbols)...
+[23:54:07] This may take a few minutes...
+[23:54:18]   Extracted 100 files, free space: 485 MB
+[23:54:21]   Extracted 200 files, free space: 450 MB
+[23:54:23]   Extracted 300 files, free space: 448 MB
+[23:54:24]   Extracted 400 files, free space: 447 MB
+[23:54:27]   Extracted 500 files, free space: 447 MB
+[23:54:28]   Extracted 600 files, free space: 442 MB
+[23:54:30]   Extracted 700 files, free space: 436 MB
+[23:54:32]   Extracted 800 files, free space: 430 MB
+[23:54:34]   Extracted 900 files, free space: 424 MB
+[23:54:35]   Extracted 1000 files, free space: 422 MB
+[23:54:36]   Extracted 1100 files, free space: 422 MB
+[23:54:40]   Extracted 1200 files, free space: 425 MB
+[23:54:44]   Extracted 1300 files, free space: 425 MB
+[23:54:47]   Extracted 1400 files, free space: 425 MB
+[23:54:51]   Extracted 1500 files, free space: 425 MB
+[23:54:57]   Extracted 1600 files, free space: 424 MB
+[23:54:57] Selective extraction complete: 1602 files extracted, 20410 files skipped
+[23:54:58] Removing zip to reclaim 322 MB...
+[23:54:59] C: free after zip removal: 746 MB
+[23:54:59] psql.exe found at: C:\Users\asus2\scoop\apps\postgresql\18.4\pgsql\bin\psql.exe
+[23:55:00] Using pgBin: C:\Users\asus2\scoop\apps\postgresql\18.4\pgsql\bin
+[23:55:00] Initializing cluster at C:\Users\asus2\pgdata ...
+[23:55:08]   The files belonging to this database system will be owned by user "asus2".
+[23:55:08]   This user must also own the server process.
+[23:55:08]   
+[23:55:08]   The database cluster will be initialized with locale "English_United Kingdom.1252".
+[23:55:08]   The default text search configuration will be set to "english".
+[23:55:10]   
+[23:55:14]   Data page checksums are enabled.
+[23:55:14]   
+[23:55:14]   creating directory C:/Users/asus2/pgdata ... ok
+[23:55:14]   creating subdirectories ... ok
+[23:55:14]   selecting dynamic shared memory implementation ... windows
+[23:55:14]   selecting default "max_connections" ... 100
+[23:55:14]   selecting default "shared_buffers" ... 128MB
+[23:55:15]   selecting default time zone ... GMT
+[23:55:15]   creating configuration files ... ok
+[23:55:22]   running bootstrap script ... ok
+[23:55:35]   performing post-bootstrap initialization ... ok
+[23:55:59]   syncing data to disk ... ok
+[23:55:59]   
+[23:55:59]   Success. You can now start the database server using:
+[23:55:59]   
+[23:55:59]       ^"C^:^\Users^\asus2^\scoop^\apps^\postgresql^\18^.4^\pgsql^\bin^\pg^_ctl^" -D ^"C^:^\Users^\asus2^\pgdata^" -l logfile start
+[23:55:59]   
+[23:55:59] initdb OK
+[23:55:59] Starting PostgreSQL server...
+[23:56:01]   waiting for server to start....2026-06-09 03:56:01.620 GMT [18608] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+[23:56:02]   2026-06-09 03:56:01.671 GMT [18608] LOG:  listening on IPv6 address "::1", port 5432
+[23:56:03]   2026-06-09 03:56:01.672 GMT [18608] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+[23:56:03]   .2026-06-09 03:56:02.449 GMT [7888] LOG:  database system was shut down at 2026-06-09 03:55:34 GMT
+[23:56:03]   2026-06-09 03:56:02.658 GMT [18608] LOG:  database system is ready to accept connections
+[23:56:03]    done
+[23:56:03]   server started
+[23:59:29]   2026-06-09 03:59:29.063 GMT [18608] LOG:  background worker "logical replication launcher" (PID 19940) was terminated by exception 0xC000013A
+[23:59:29]   2026-06-09 03:59:29.063 GMT [18608] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.

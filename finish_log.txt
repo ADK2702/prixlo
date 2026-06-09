@@ -1,0 +1,4 @@
+
+[00:00:22] === FINISH_SETUP START ===
+[00:00:22] PG status: pg_ctl: no server running
+[00:00:22] Server not running, starting...

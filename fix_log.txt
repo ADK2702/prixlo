@@ -1,0 +1,3 @@
+[23:52:11]   Clearing scoop cache (322 MB)...
+[23:52:12] C: free space after cleanup: 570 MB
+[23:52:12] ERROR: Still insufficient space (570 MB free, need ~750 MB). Aborting.

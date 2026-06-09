@@ -1,0 +1,119 @@
+2026-06-09 04:05:55.266 GMT [1872] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-09 04:05:55.295 GMT [1872] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-09 04:05:55.296 GMT [1872] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-09 04:05:56.036 GMT [22008] LOG:  database system was interrupted; last known up at 2026-06-09 04:00:27 GMT
+2026-06-09 04:06:03.493 GMT [22008] LOG:  could not open file "./pg.log": sharing violation
+2026-06-09 04:06:03.493 GMT [22008] DETAIL:  Continuing to retry for 30 seconds.
+2026-06-09 04:06:03.493 GMT [22008] HINT:  You might have antivirus, backup, or similar software interfering with the database system.
+2026-06-09 04:06:31.570 GMT [22008] LOG:  syncing data directory (fsync), elapsed time: 35.53 s, current path: ./pg_commit_ts
+2026-06-09 04:06:31.601 GMT [22008] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-09 04:06:31.627 GMT [22008] LOG:  redo starts at 0/1828FF0
+2026-06-09 04:06:31.628 GMT [22008] LOG:  invalid record length at 0/1829028: expected at least 24, got 0
+2026-06-09 04:06:31.628 GMT [22008] LOG:  redo done at 0/1828FF0 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-06-09 04:06:31.679 GMT [16496] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-09 04:06:31.731 GMT [16496] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.023 s, sync=0.010 s, total=0.086 s; sync files=2, longest=0.007 s, average=0.005 s; distance=0 kB, estimate=0 kB; lsn=0/1829028, redo lsn=0/1829028
+2026-06-09 04:06:31.785 GMT [1872] LOG:  database system is ready to accept connections
+2026-06-09 04:09:13.509 GMT [1872] LOG:  background worker "logical replication launcher" (PID 17632) was terminated by exception 0xC000013A
+2026-06-09 04:09:13.509 GMT [1872] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-09 04:09:13.509 GMT [1872] LOG:  terminating any other active server processes
+2026-06-09 04:09:13.739 GMT [1872] LOG:  received fast shutdown request
+^C2026-06-09 04:11:04.215 GMT [13196] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-09 04:11:04.238 GMT [13196] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-09 04:11:04.239 GMT [13196] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-09 04:11:04.710 GMT [22200] LOG:  database system was interrupted; last known up at 2026-06-09 04:06:31 GMT
+2026-06-09 04:11:11.173 GMT [22200] LOG:  could not open file "./pg.log": sharing violation
+2026-06-09 04:11:11.173 GMT [22200] DETAIL:  Continuing to retry for 30 seconds.
+2026-06-09 04:11:11.173 GMT [22200] HINT:  You might have antivirus, backup, or similar software interfering with the database system.
+2026-06-09 04:11:39.244 GMT [22200] LOG:  syncing data directory (fsync), elapsed time: 34.53 s, current path: ./pg_commit_ts
+2026-06-09 04:11:39.289 GMT [22200] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-09 04:11:39.300 GMT [22200] LOG:  redo starts at 0/18290A0
+2026-06-09 04:11:39.301 GMT [22200] LOG:  invalid record length at 0/18290D8: expected at least 24, got 0
+2026-06-09 04:11:39.301 GMT [22200] LOG:  redo done at 0/18290A0 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-06-09 04:11:39.343 GMT [19916] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-09 04:11:39.392 GMT [19916] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.013 s, sync=0.005 s, total=0.069 s; sync files=2, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=0 kB; lsn=0/18290D8, redo lsn=0/18290D8
+2026-06-09 04:11:39.447 GMT [13196] LOG:  database system is ready to accept connections
+2026-06-09 04:11:43.575 GMT [5208] ERROR:  functions in index expression must be marked IMMUTABLE
+2026-06-09 04:11:43.575 GMT [5208] STATEMENT:  CREATE INDEX IF NOT EXISTS idx_prices_fts
+	    ON prices USING GIN (to_tsvector('simple', unaccent(name)));
+2026-06-09 04:13:32.801 GMT [13196] LOG:  background worker "logical replication launcher" (PID 9976) was terminated by exception 0xC000013A
+2026-06-09 04:13:32.801 GMT [13196] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-09 04:13:32.801 GMT [13196] LOG:  terminating any other active server processes
+2026-06-09 04:13:32.939 GMT [13196] LOG:  received fast shutdown request
+^C2026-06-09 04:20:00.013 GMT [17664] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-09 04:20:00.033 GMT [17664] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-09 04:20:00.034 GMT [17664] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-09 04:20:01.490 GMT [20592] LOG:  database system was interrupted; last known up at 2026-06-09 04:11:39 GMT
+2026-06-09 04:20:11.684 GMT [20592] LOG:  could not open file "./pg.log": sharing violation
+2026-06-09 04:20:11.684 GMT [20592] DETAIL:  Continuing to retry for 30 seconds.
+2026-06-09 04:20:11.684 GMT [20592] HINT:  You might have antivirus, backup, or similar software interfering with the database system.
+2026-06-09 04:20:40.202 GMT [20592] LOG:  syncing data directory (fsync), elapsed time: 38.70 s, current path: ./pg_commit_ts
+2026-06-09 04:20:40.272 GMT [20592] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-09 04:20:40.291 GMT [20592] LOG:  redo starts at 0/1829150
+2026-06-09 04:20:42.698 GMT [20592] LOG:  invalid record length at 0/43FA568: expected at least 24, got 0
+2026-06-09 04:20:42.698 GMT [20592] LOG:  redo done at 0/43FA430 system usage: CPU: user: 0.76 s, system: 0.48 s, elapsed: 2.40 s
+2026-06-09 04:20:42.732 GMT [19012] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-09 04:20:45.298 GMT [19012] LOG:  checkpoint complete: wrote 2702 buffers (16.5%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 3 recycled; write=0.977 s, sync=1.489 s, total=2.570 s; sync files=326, longest=0.281 s, average=0.005 s; distance=44869 kB, estimate=44869 kB; lsn=0/43FA568, redo lsn=0/43FA568
+2026-06-09 04:20:48.029 GMT [17664] LOG:  database system is ready to accept connections
+2026-06-09 04:21:43.821 GMT [17664] LOG:  WAL writer process (PID 21208) was terminated by exception 0xC000013A
+2026-06-09 04:21:43.821 GMT [17664] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-09 04:21:43.822 GMT [17664] LOG:  terminating any other active server processes
+^C2026-06-09 04:21:59.196 GMT [21480] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-09 04:21:59.258 GMT [21480] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-09 04:21:59.259 GMT [21480] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-09 04:22:00.037 GMT [18536] LOG:  database system was interrupted; last known up at 2026-06-09 04:20:45 GMT
+2026-06-09 04:22:08.134 GMT [18536] LOG:  could not open file "./pg.log": sharing violation
+2026-06-09 04:22:08.134 GMT [18536] DETAIL:  Continuing to retry for 30 seconds.
+2026-06-09 04:22:08.134 GMT [18536] HINT:  You might have antivirus, backup, or similar software interfering with the database system.
+2026-06-09 04:22:36.099 GMT [18536] LOG:  syncing data directory (fsync), elapsed time: 36.05 s, current path: ./pg_commit_ts
+2026-06-09 04:22:36.160 GMT [18536] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-09 04:22:36.180 GMT [18536] LOG:  redo starts at 0/43FA5E0
+2026-06-09 04:22:36.183 GMT [18536] LOG:  invalid record length at 0/43FAA08: expected at least 24, got 0
+2026-06-09 04:22:36.183 GMT [18536] LOG:  redo done at 0/43FA9D0 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-06-09 04:22:36.223 GMT [14988] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-09 04:22:36.277 GMT [14988] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.015 s, sync=0.010 s, total=0.075 s; sync files=3, longest=0.006 s, average=0.004 s; distance=1 kB, estimate=1 kB; lsn=0/43FAA08, redo lsn=0/43FAA08
+2026-06-09 04:22:36.632 GMT [21480] LOG:  database system is ready to accept connections
+2026-06-09 04:23:21.943 GMT [21480] LOG:  background worker "logical replication launcher" (PID 13088) was terminated by exception 0xC000013A
+2026-06-09 04:23:21.943 GMT [21480] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-09 04:23:21.946 GMT [21480] LOG:  terminating any other active server processes
+2026-06-09 04:23:22.123 GMT [21480] LOG:  received fast shutdown request
+^C2026-06-09 11:25:08.849 GMT [18656] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-09 11:25:08.879 GMT [18656] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-09 11:25:08.880 GMT [18656] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-09 11:25:09.534 GMT [23120] LOG:  database system was interrupted; last known up at 2026-06-09 04:22:36 GMT
+2026-06-09 11:25:18.137 GMT [23120] LOG:  could not open file "./pg.log": sharing violation
+2026-06-09 11:25:18.137 GMT [23120] DETAIL:  Continuing to retry for 30 seconds.
+2026-06-09 11:25:18.137 GMT [23120] HINT:  You might have antivirus, backup, or similar software interfering with the database system.
+2026-06-09 11:25:46.848 GMT [23120] LOG:  syncing data directory (fsync), elapsed time: 37.30 s, current path: ./pg_commit_ts
+2026-06-09 11:25:46.906 GMT [23120] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-09 11:25:46.951 GMT [23120] LOG:  redo starts at 0/43FAA80
+2026-06-09 11:25:46.952 GMT [23120] LOG:  invalid record length at 0/43FAAB8: expected at least 24, got 0
+2026-06-09 11:25:46.952 GMT [23120] LOG:  redo done at 0/43FAA80 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-06-09 11:25:47.020 GMT [23264] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-09 11:25:47.103 GMT [23264] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.013 s, sync=0.017 s, total=0.133 s; sync files=2, longest=0.011 s, average=0.009 s; distance=0 kB, estimate=0 kB; lsn=0/43FAAB8, redo lsn=0/43FAAB8
+2026-06-09 11:25:47.153 GMT [18656] LOG:  database system is ready to accept connections
+2026-06-09 11:25:48.891 GMT [19604] ERROR:  function unaccent(text) does not exist at character 9
+2026-06-09 11:25:48.891 GMT [19604] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2026-06-09 11:25:48.891 GMT [19604] QUERY:   SELECT unaccent($1) 
+2026-06-09 11:25:48.891 GMT [19604] CONTEXT:  SQL function "unaccent_immutable" during inlining
+2026-06-09 11:25:48.891 GMT [19604] STATEMENT:  CREATE INDEX idx_prices_fts ON prices USING GIN (to_tsvector('simple', unaccent_immutable(name)));
+2026-06-09 11:28:46.209 GMT [18656] LOG:  WAL writer process (PID 21128) was terminated by exception 0xC000013A
+2026-06-09 11:28:46.209 GMT [18656] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-09 11:28:46.209 GMT [18656] LOG:  terminating any other active server processes
+2026-06-09 11:28:46.297 GMT [18656] LOG:  received fast shutdown request
+^C2026-06-09 11:29:32.363 GMT [16784] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-09 11:29:32.408 GMT [16784] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-09 11:29:32.408 GMT [16784] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-09 11:29:32.957 GMT [21544] LOG:  database system was interrupted; last known up at 2026-06-09 11:25:47 GMT
+2026-06-09 11:29:41.056 GMT [21544] LOG:  could not open file "./pg.log": sharing violation
+2026-06-09 11:29:41.056 GMT [21544] DETAIL:  Continuing to retry for 30 seconds.
+2026-06-09 11:29:41.056 GMT [21544] HINT:  You might have antivirus, backup, or similar software interfering with the database system.
+2026-06-09 11:30:08.748 GMT [21544] LOG:  syncing data directory (fsync), elapsed time: 35.78 s, current path: ./pg_commit_ts
+2026-06-09 11:30:08.797 GMT [21544] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-09 11:30:08.817 GMT [21544] LOG:  redo starts at 0/43FAB30
+2026-06-09 11:30:08.893 GMT [21544] LOG:  invalid record length at 0/4558538: expected at least 24, got 0
+2026-06-09 11:30:08.893 GMT [21544] LOG:  redo done at 0/4558500 system usage: CPU: user: 0.00 s, system: 0.06 s, elapsed: 0.07 s
+2026-06-09 11:30:08.912 GMT [10476] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-09 11:30:09.067 GMT [10476] LOG:  checkpoint complete: wrote 185 buffers (1.1%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.089 s, sync=0.042 s, total=0.158 s; sync files=24, longest=0.015 s, average=0.002 s; distance=1398 kB, estimate=1398 kB; lsn=0/4558538, redo lsn=0/4558538
+2026-06-09 11:30:09.173 GMT [16784] LOG:  database system is ready to accept connections
+2026-06-09 11:35:08.075 GMT [10476] LOG:  checkpoint starting: time
+2026-06-09 11:35:08.741 GMT [10476] LOG:  checkpoint complete: wrote 5 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.577 s, sync=0.025 s, total=0.667 s; sync files=4, longest=0.022 s, average=0.007 s; distance=33 kB, estimate=1262 kB; lsn=0/4560D50, redo lsn=0/4560CF8
