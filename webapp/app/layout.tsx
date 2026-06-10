@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://epiceriepromo.ca';
-const SITE_NAME = 'Épicerie Promo';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://prixlo.ca';
+const SITE_NAME = 'Prixlo';
 const DESCRIPTION =
-  'Comparez les prix des circulaires épicerie au Canada : IGA, Metro, Maxi, Walmart et plus. Trouvez le meilleur prix chaque semaine.';
+  'Comparez les prix des circulaires épicerie au Canada : IGA, Metro, Maxi, Walmart et plus. Trouvez le meilleur prix chaque semaine avec Prixlo.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'Épicerie Promo — comparateur de prix',
+        alt: 'Prixlo — comparateur de prix épicerie Canada',
       },
     ],
   },

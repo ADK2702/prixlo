@@ -256,7 +256,7 @@ export default function Home() {
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: 32 }}>
         <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.5px', marginBottom: 6 }}>
-          🛒 Épicerie Promo
+          🛒 Prixlo
         </h1>
         <p style={{ color: 'var(--muted)', fontSize: 14 }}>
           Meilleurs prix des circulaires — Canada
