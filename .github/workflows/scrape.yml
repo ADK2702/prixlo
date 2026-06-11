@@ -1,0 +1,77 @@
+# Phase 3 — Weekly data freshness cron
+# Runs every Monday at 06:00 UTC (02:00 EST / 01:00 CST)
+# Triggers Vercel redeploy so ISR cache is busted + health check passes
+
+name: Weekly Scrape & Cache Bust
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Every Monday 06:00 UTC
+  workflow_dispatch:        # Allow manual trigger from GitHub UI
+
+jobs:
+  scrape-and-deploy:
+    name: Scrape circulaires & redeploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ── 1. Checkout ────────────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── 2. Setup Python for scraper ────────────────────────────────────────
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      # ── 3. Install scraper dependencies ────────────────────────────────────
+      - name: Install scraper deps
+        run: |
+          pip install requests beautifulsoup4 psycopg2-binary python-dotenv
+        # Add your scraper's requirements.txt here once it exists:
+        # run: pip install -r scrapers/requirements.txt
+
+      # ── 4. Run scraper (identified as PrixloBot/1.0) ───────────────────────
+      - name: Run circulaire scraper
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PRIXLO_USER_AGENT: 'PrixloBot/1.0 (prixlo.ca; hello@prixlo.ca)'
+        run: |
+          echo "Scraper placeholder — replace with: python scrapers/run_all.py"
+          echo "DATABASE_URL is set: ${{ secrets.DATABASE_URL != '' }}"
+          # python scrapers/run_all.py
+
+      # ── 5. Trigger Vercel redeploy (busts ISR/Edge cache) ─────────────────
+      - name: Redeploy to Vercel
+        if: ${{ secrets.VERCEL_DEPLOY_HOOK != '' }}
+        run: |
+          curl -s -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
+          echo "Vercel redeploy triggered"
+
+      # ── 6. Health check — verify data is fresh ────────────────────────────
+      - name: Wait for deployment
+        run: sleep 60
+
+      - name: Health check
+        run: |
+          STATUS=$(curl -s https://prixlo.ca/api/health | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('status','unknown'))")
+          DAYS=$(curl -s https://prixlo.ca/api/health | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('days_since_update',99))")
+          echo "Data status: $STATUS (${DAYS} days old)"
+          if [ "$STATUS" = "stale" ]; then
+            echo "⚠️  WARNING: Data is stale after scrape! Check scraper logs."
+            exit 1
+          fi
+          echo "✅ Data is fresh"
+
+      # ── 7. Notify on failure ───────────────────────────────────────────────
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Scrape or health check failed — add Slack/email notification here"
+          # Example with curl to a Slack webhook:
+          # curl -s -X POST "${{ secrets.SLACK_WEBHOOK }}" \
+          #   -H "Content-Type: application/json" \
+          #   -d '{"text":"⚠️ Prixlo scrape failed! Check GitHub Actions."}'

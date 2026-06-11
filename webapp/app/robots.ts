@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://epiceriepromo.ca';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://prixlo.ca';
 
 export default function robots(): MetadataRoute.Robots {
   return {

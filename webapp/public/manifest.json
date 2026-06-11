@@ -1,0 +1,45 @@
+{
+  "name": "Prixlo — Meilleurs prix épicerie",
+  "short_name": "Prixlo",
+  "description": "Comparez les prix des circulaires épicerie au Canada. IGA, Metro, Maxi, Walmart et plus.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f4f6fb",
+  "theme_color": "#1a73e8",
+  "lang": "fr-CA",
+  "categories": ["shopping", "food", "utilities"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Prixlo sur mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Chercher des produits",
+      "short_name": "Rechercher",
+      "description": "Comparez les prix de l'épicerie",
+      "url": "/",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

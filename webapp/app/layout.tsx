@@ -52,9 +52,52 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: DESCRIPTION,
+  applicationCategory: 'ShoppingApplication',
+  operatingSystem: 'All',
+  inLanguage: 'fr-CA',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'CAD' },
+  publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
+      <head>
+        {/* PWA */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#1a73e8" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        {/* Apple */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Prixlo" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+        {/* Viewport */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        {/* JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {/* Service Worker registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').catch(function(){});
+                });
+              }
+            `,
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

@@ -40,3 +40,8 @@ npm-debug.log*
 # PostgreSQL dumps (may contain passwords)
 *.sql.gz
 *.dump
+
+# Deployment scripts — contain PAT tokens, never commit
+*.bat
+*.ps1
+pat_config.txt
