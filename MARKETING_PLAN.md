@@ -1,132 +1,139 @@
-# Plan Marketing Prixlo
-## Simple · Efficace · Gratuit d'abord
+# Plan marketing Prixlo — Simple, efficace, gratuit
+
+## Positionnement
+**"Compare les prix d'épicerie de tous tes marchands, en un seul endroit."**  
+Ciblage initial : Québec francophone (Montréal + régions), puis Ontario.
 
 ---
 
-## 🎯 Objectif 12 mois
-- **5 000 utilisateurs actifs/mois** (Canada, Québec en priorité)
-- **1 500 abonnés newsletter**
-- **500 téléchargements app mobile** (dès la sortie)
-- Top 3 Google pour "comparateur prix épicerie Canada"
+## Phase 1 — Lancement (Mois 1-2) : 0 $ de budget
+
+### Objectif : 500 utilisateurs actifs
+
+#### A. SEO local (trafic organique long terme)
+Mots-clés à cibler :
+- `prix épicerie Montréal`
+- `circulaire IGA cette semaine`
+- `meilleur prix lait Québec`
+- `promo épicerie semaine`
+- `comparateur prix epicerie Canada`
+
+**Actions :**
+- Page titre : `Prixlo — Comparez les prix d'épicerie au Canada`
+- Meta description avec mots-clés locaux
+- 5 articles de blogue : "Économiser sur l'épicerie à Montréal", "Comparaison IGA vs Metro vs Maxi", etc.
+- Données structurées (JSON-LD) pour les produits → apparaître dans Google Shopping
+
+#### B. Communautés Reddit
+- r/Quebec — Post : "J'ai construit un comparateur de prix d'épicerie gratuit pour le Canada"
+- r/PersonalFinanceCanada — Post : "Free grocery price comparison tool I built"
+- r/montreal — Post en français
+- r/frugal — Post en anglais
+
+**Template post :**
+> J'en avais marre de comparer manuellement les circulaires IGA, Metro et Maxi chaque semaine.
+> J'ai construit Prixlo.ca — un comparateur gratuit qui agrège tous les circulaires automatiquement.
+> Tapez n'importe quel produit, voyez où c'est le moins cher cette semaine.
+> [Lien] — 100% gratuit, aucun compte requis.
+
+#### C. Facebook Groupes
+Cibler les groupes :
+- "Aubaines et Promotions Québec" (150k+ membres)
+- "Deals et Promotions Canada"
+- "Maman économe Québec"
+- "Vivre avec peu Québec"
+
+**Message :** Court, direct, sans jargon. Montrer une vraie économie ("bananes 30% moins chères chez Maxi cette semaine").
+
+#### D. TikTok / Instagram Reels (contenu viral)
+Format : **60 secondes — "j'ai économisé XX$ cette semaine"**
+- Filmer une recherche en temps réel sur prixlo.ca
+- Comparer 3 marchands pour un panier de 20 items
+- Afficher l'économie totale
+- CTA : "Essaie gratuitement à prixlo.ca"
+
+Fréquence : 3 vidéos/semaine minimum les 2 premiers mois.
 
 ---
 
-## 📣 Phase 1 — Lancement (Mois 1-2) — Gratuit
+## Phase 2 — Croissance (Mois 3-6) : Budget minimal
 
-### SEO / Contenu
-- Page d'accueil optimisée : "comparer prix épicerie Canada", "circulaire IGA Metro Maxi"
-- **5 articles de blogue** cibles haute conversion :
-  1. "Comment économiser 200$/mois à l'épicerie au Canada"
-  2. "IGA vs Metro vs Maxi : qui est vraiment moins cher ?"
-  3. "Les meilleures applications épicerie Canada 2026"
-  4. "Circulaires épicerie : notre guide complet"
-  5. "Prixlo vs Reebee vs Flipp : comparaison honnête"
-- Schema.org WebApplication + FAQ sur chaque page
-- Sitemap.xml soumis à Google Search Console + Bing Webmaster Tools
+### Objectif : 5 000 utilisateurs actifs / mois
 
-### Réseaux sociaux — Comptes à créer
-| Plateforme | Objectif | Fréquence |
-|---|---|---|
-| **TikTok @prixlo** | Viral, 18-35 ans | 3×/semaine |
-| **Instagram @prixlo.ca** | Photos produits + économies | 2×/semaine |
-| **Facebook Page Prixlo** | 35-55 ans, familles | 2×/semaine |
-| **Reddit r/PersonalFinanceCanada** | Crédibilité, trafic qualifié | 1×/semaine |
+#### E. Newsletter hebdomadaire
+- Envoyer chaque jeudi (quand les nouveaux circulaires sortent)
+- Contenu : Top 10 meilleures promos de la semaine
+- Sujet : "🛒 Meilleures promos épicerie cette semaine | Prixlo"
+- Outil : Brevo (gratuit jusqu'à 300 emails/jour) ou Mailchimp
+- Cible : 1 000 abonnés en 3 mois
 
-### Contenu viral TikTok/Reels (modèles)
-- "J'ai trouvé X au prix le moins cher de la semaine 🛒"
-- "Vs comparaison : même produit dans 5 épiceries"
-- "Budget épicerie 100$/semaine challenge"
-- POV : faire l'épicerie avec Prixlo
+#### F. Partenariats micro-influenceurs
+- Cibler les créateurs de contenu "budget/économies" québécois (1k-50k abonnés)
+- Offrir : Mention + lien. Pas de paiement au départ — valeur = service gratuit utile.
+- Profils cibles : instagrammeurs "maman économe", TikTokeurs "meal prep budget"
 
----
+#### G. Product Hunt
+- Lancer officiellement sur Product Hunt un mardi matin (peak traffic)
+- Catégorie : "Fintech" ou "Productivity"
+- Préparer 3-5 supporters pour voter le jour J
 
-## 📱 Phase 2 — Croissance (Mois 3-6) — Micro-budget
-
-### Acquisition organique
-- **Google My Business** : créer une fiche (catégorie : Application mobile)
-- **Product Hunt** : lancer Prixlo le mardi matin (peak traffic)
-- **AppSumo** ou **BetaList** : soumission gratuite
-- Soumettre à **AlternativeTo** (alternative à Flipp, Reebee)
-- Forum **WebDev.ca**, **reddit.com/r/Quebec** : posts authentiques
-
-### Partenariats micro-influenceurs (budget 0-500$)
-Cibler les créateurs québécois avec 2K-50K abonnés :
-- **Catégories** : Budget famille, économies, épicerie saine
-- **Approche** : Offrir accès gratuit premium (futur), pas d'argent au début
-- **Script** : "Prixlo m'a aidé à économiser X$ cette semaine — voici comment"
-- Chercher avec hashtags : #economiequebec #epiceriequebec #budgetfamille
-
-### Newsletter hebdomadaire (automatisée)
-- Contenu : "Top 10 meilleures promos de la semaine"
-- Fréquence : Chaque mercredi soir (veille de la plupart des nouvelles circulaires)
-- Outil gratuit : **Brevo** (anciennement Sendinblue) — 300 emails/jour gratuit
-- Croissance : intégrer le formulaire /api/newsletter dans le footer et page d'accueil
+#### H. Google Ads (budget 50$/mois)
+- Uniquement keywords à forte intention : "circulaire IGA", "prix épicerie semaine"
+- CPC cible : 0.20-0.50 $ CAD
+- 100-250 clics/mois → ~20-50 nouveaux utilisateurs
 
 ---
 
-## 💰 Phase 3 — Monétisation (Mois 6-12)
+## Phase 3 — Monétisation (Mois 6+)
 
-### Revenus potentiels (ordre de priorité)
-1. **Affiliation épiceries** : lien tracké vers la circulaire → commission (0,5-2%)
-2. **Bannière display** : Google AdSense (revenu passif, ~2-5$/1000 vues)
-3. **Partenariats détaillants** : mise en avant de leurs promos (500-2000$/mois)
-4. **Prixlo Pro** : fonctionnalités premium (liste de courses, alertes prix) — 2,99$/mois
-5. **API B2B** : vendre l'accès aux données aux apps tierces
+### Modèles de revenus à tester
 
-### Objectif revenu mois 12
-- 2 000 utilisateurs actifs × 30 pages vues × 3$ CPM = ~**180$/mois AdSense**
-- 1 partenariat détaillant = **500$/mois**
-- 100 abonnés Prixlo Pro = **300$/mois**
-- **Total estimé mois 12 : ~1 000$/mois**
+| Modèle | Description | Potentiel |
+|--------|------------|-----------|
+| **Liens affiliés** | Lien vers achat en ligne (IGA en ligne, Walmart) | Faible mais passif |
+| **Bannière marchands** | Marchands paient pour être mis en avant | Moyen |
+| **API B2B** | Vendre l'accès aux données à des apps budget/finance | Fort |
+| **Version Premium** | Alertes prix, historique, listes de courses | Moyen |
+| **Partenariat Flipp officiel** | Revenue share sur les clics référés | Fort |
 
----
-
-## 📊 KPIs à suivre (Google Analytics 4 gratuit)
-
-| Métrique | Mois 1 | Mois 6 | Mois 12 |
-|---|---|---|---|
-| Visiteurs uniques/mois | 200 | 2 000 | 5 000 |
-| Taux de rebond | <70% | <60% | <55% |
-| Recherches/visiteur | 1,5 | 2,5 | 3+ |
-| Abonnés newsletter | 50 | 500 | 1 500 |
-| Position Google "comparateur épicerie CA" | 30+ | Top 10 | Top 3 |
+**Priorité initiale : 0 $ de monétisation — croître d'abord.**
 
 ---
 
-## 🛠️ Outils gratuits recommandés
+## Métriques à suivre
 
-| Outil | Usage | Coût |
-|---|---|---|
-| Google Search Console | SEO monitoring | Gratuit |
-| Google Analytics 4 | Trafic + comportement | Gratuit |
-| Brevo | Emails newsletter | Gratuit jusqu'à 300/jour |
-| Canva | Visuels réseaux sociaux | Gratuit |
-| Buffer | Planification posts | Gratuit (3 comptes) |
-| AnswerThePublic | Idées contenu SEO | Gratuit (limité) |
-
----
-
-## ⚠️ Ce qui peut tuer le projet — mitigation
-
-| Risque | Mitigation |
-|---|---|
-| Données trop vieilles | GitHub Actions cron hebdomadaire + alerte StalenessBanner |
-| Scraping bloqué | PrixloBot/1.0 identifié, rate limiting respectueux, partenariats officiels à terme |
-| Concurrent (Flipp, Reebee) | Différenciation : Canada seulement + UX plus simple + français en priorité |
-| Coûts serveur Vercel | Plan gratuit suffit jusqu'à ~50K req/mois. Supabase free tier = 500MB |
-| 0 téléchargement app | PWA installable = app sans App Store. Soumettre quand 1K users actifs. |
+| Métrique | Mois 1 | Mois 3 | Mois 6 |
+|----------|--------|--------|--------|
+| Utilisateurs/mois | 500 | 2 000 | 10 000 |
+| Recherches/mois | 1 500 | 8 000 | 40 000 |
+| Abonnés newsletter | 100 | 500 | 2 000 |
+| Trafic organique (%) | 20% | 40% | 60% |
+| Taux de retour | 20% | 35% | 50% |
 
 ---
 
-## 📅 Calendrier d'actions (90 premiers jours)
+## Différentiateurs vs concurrents
 
-| Semaine | Action |
-|---|---|
-| S1 | Créer comptes TikTok, Instagram, Facebook. Filmer 3 vidéos TikTok. |
-| S2 | Soumettre à Product Hunt + BetaList. Publier article blogue #1. |
-| S3 | Reddit : post authentique r/PersonalFinanceCanada + r/Quebec |
-| S4 | Google Search Console setup + soumettre sitemap. |
-| S5-6 | Contacter 10 micro-influenceurs (DM Instagram/TikTok). |
-| S7-8 | Brevo newsletter setup. Premiers 50 abonnés via footer + popup sortie. |
-| S9-10 | Article blogue #2 + #3. Analyser top pages Search Console. |
-| S11-12 | Bilan 90 jours. Doubler ce qui fonctionne. |
+| Feature | Prixlo | Flipp app | Redflagdeals |
+|---------|--------|-----------|-------------|
+| Comparaison multi-marchands | ✅ | ❌ | ❌ |
+| Recherche par produit | ✅ | Partiel | ❌ |
+| Interface mobile PWA | ✅ | App native | ❌ |
+| Gratuit, sans compte | ✅ | ✅ | ✅ |
+| Français prioritaire | ✅ | Partiel | ❌ |
+| Couverture Canada complet | ✅ | ✅ | Partiel |
+
+---
+
+## Actions immédiates (cette semaine)
+
+1. [ ] Acheter prixlo.ca et connecter à Vercel
+2. [ ] Poster sur r/Quebec et r/montreal au lancement
+3. [ ] Créer compte TikTok @prixlo.ca
+4. [ ] Filmer la première vidéo "démo produit"
+5. [ ] Configurer Google Search Console sur prixlo.ca
+6. [ ] Écrire le premier article de blogue SEO
+
+---
+
+*Plan rédigé : Juin 2026. Simple = durable. Gratuit d'abord, scalable ensuite.*

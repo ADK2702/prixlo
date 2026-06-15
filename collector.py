@@ -7,6 +7,7 @@ Déduplique par flyer_type_id pour ne fetcher chaque circulaire qu'une seule foi
 import requests
 import json
 import random
+import sys
 import time
 import csv
 from datetime import datetime
@@ -178,7 +179,9 @@ def main():
     print(f"✓ {len(summary['merchants'])} marchands uniques")
     print(f"✓ Marchands: {', '.join(summary['merchants'])}")
 
-    input("\nAppuie sur Entrée pour fermer...")
+    # Pause interactive uniquement (pas en CI/GitHub Actions)
+    if sys.stdin.isatty():
+        input("\nAppuie sur Entrée pour fermer...")
 
 if __name__ == "__main__":
     main()

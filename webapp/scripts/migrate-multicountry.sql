@@ -64,17 +64,23 @@ SELECT
   p.id,
   p.product_id,
   p.merchant_id,
-  pr.name                               AS product_name,
+  pr.name                                     AS product_name,
+  pr.name                                     AS name,            -- compat (search API)
   pr.category,
-  pr.brand,
+  pr.brand,                                                       -- compat (search API)
   pr.barcode,
-  pr.country                            AS country,
-  m.name                                AS merchant_name,
-  m.locale                              AS merchant_locale,
-  m.currency                            AS currency,
+  pr.image_url,                                                   -- compat (search API)
+  pr.country                                  AS country,
+  m.name                                      AS merchant_name,
+  m.name                                      AS merchant,        -- compat (search API)
+  m.slug                                      AS merchant_slug,   -- compat
+  m.region                                    AS region,          -- compat
+  m.locale                                    AS merchant_locale,
+  m.currency                                  AS currency,
   p.regular_price,
   p.sale_price,
-  COALESCE(p.sale_price, p.regular_price) AS effective_price,
+  COALESCE(p.sale_price, p.regular_price)     AS effective_price,
+  COALESCE(p.sale_price, p.regular_price)     AS price,           -- compat (search API)
   p.unit,
   p.unit_price,
   p.valid_from,
