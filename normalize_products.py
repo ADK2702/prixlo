@@ -28,7 +28,7 @@ from dotenv import load_dotenv
 # Config
 # ---------------------------------------------------------------------------
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "webapp", ".env.local"))
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres@localhost:5432/epicerie")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres@localhost:5432/prixlo")
 
 FUZZY_THRESHOLD = 82   # token_set_ratio threshold for merging clusters
 BRAND_WEIGHT    = True  # only fuzzy-match within same brand group
@@ -102,10 +102,11 @@ def main():
 
     print("Loading distinct (name, brand) pairs from prices…")
     cur.execute("""
-        SELECT ARRAY_AGG(id) AS ids, name, brand
-        FROM prices
-        GROUP BY name, brand
-        ORDER BY name
+        SELECT ARRAY_AGG(pr.id) AS ids, p.name, p.brand
+        FROM prices pr
+        JOIN products p ON p.id = pr.product_id
+        GROUP BY p.name, p.brand
+        ORDER BY p.name
     """)
     rows = cur.fetchall()
     print(f"  {len(rows)} distinct (name, brand) combinations")
@@ -231,8 +232,7 @@ def main():
         FROM (
           SELECT cluster_id
           FROM prices p
-          JOIN flyers f ON f.id = p.flyer_id
-          JOIN merchants m ON m.id = f.merchant_id
+          JOIN merchants m ON m.id = p.merchant_id
           WHERE cluster_id IS NOT NULL
           GROUP BY cluster_id
           HAVING COUNT(DISTINCT m.name) > 1
@@ -249,5 +249,4 @@ def main():
     conn.close()
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__m
