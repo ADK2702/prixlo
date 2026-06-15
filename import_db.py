@@ -31,7 +31,7 @@ load_dotenv()
 
 DB_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:postgres@localhost:5432/epicerie"
+    "postgresql://postgres:postgres@localhost:5432/prixlo"
 )
 
 
@@ -42,7 +42,7 @@ def slugify(name: str) -> str:
     return s[:255]
 
 
-def parse_price(raw) -> Decimal | None:
+def parse_price(raw):
     if not raw:
         return None
     try:
@@ -58,15 +58,49 @@ def parse_date(s: str):
     return d if len(d) == 10 else None
 
 
-# ── Région Flipp → code province ─────────────────────────────────────────────
+def ensure_schema(cur):
+    """Ensure all columns and constraints exist - idempotent, safe to re-run."""
+    stmts = [
+        "ALTER TABLE merchants ADD COLUMN IF NOT EXISTS country CHAR(2) NOT NULL DEFAULT 'CA'",
+        "ALTER TABLE merchants ADD COLUMN IF NOT EXISTS region VARCHAR(80)",
+        "ALTER TABLE products ADD COLUMN IF NOT EXISTS brand VARCHAR(120)",
+        "ALTER TABLE products ADD COLUMN IF NOT EXISTS barcode VARCHAR(20)",
+        "ALTER TABLE products ADD COLUMN IF NOT EXISTS country CHAR(2) NOT NULL DEFAULT 'CA'",
+        "ALTER TABLE prices ADD COLUMN IF NOT EXISTS country CHAR(2) NOT NULL DEFAULT 'CA'",
+    ]
+    for stmt in stmts:
+        cur.execute(stmt)
+    cur.execute("""
+        DO $$ BEGIN
+          IF NOT EXISTS (SELECT 1 FROM pg_constraint
+                         WHERE conname = 'products_barcode_key'
+                           AND conrelid = 'products'::regclass)
+          THEN ALTER TABLE products ADD CONSTRAINT products_barcode_key UNIQUE (barcode);
+          END IF;
+        END $$
+    """)
+    cur.execute("""
+        DO $$ BEGIN
+          IF NOT EXISTS (SELECT 1 FROM pg_constraint
+                         WHERE conname = 'prices_unique_offer'
+                           AND conrelid = 'prices'::regclass)
+          THEN ALTER TABLE prices
+                 ADD CONSTRAINT prices_unique_offer
+                 UNIQUE (product_id, merchant_id, valid_from, valid_to);
+          END IF;
+        END $$
+    """)
+    print("  Schema a jour")
+
+
 REGION_TO_PROVINCE = {
     "QC": "QC", "ON": "ON", "BC": "BC", "AB": "AB",
     "SK": "SK", "MB": "MB", "NB": "NB", "NS": "NS",
     "PE": "PE", "NL": "NL", "YK": "YT", "NT": "NT",
 }
 
-def region_to_province(region: str) -> str | None:
-    """'QC-Montreal' → 'QC'"""
+
+def region_to_province(region: str):
     if not region:
         return None
     prefix = region.split("-")[0].upper()
@@ -74,30 +108,29 @@ def region_to_province(region: str) -> str | None:
 
 
 def main():
-    # ── Trouver le CSV le plus récent ─────────────────────────────────────────
     files = sorted(glob.glob("canada_flipp_*.csv"))
     if not files:
-        print("Aucun fichier canada_flipp_*.csv trouvé.")
+        print("Aucun fichier canada_flipp_*.csv trouve.")
         return
     csv_file = files[-1]
     print(f"Fichier source : {csv_file}")
 
-    # ── Lire le CSV ───────────────────────────────────────────────────────────
     rows = []
     with open(csv_file, newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             rows.append(row)
     print(f"  {len(rows):,} lignes lues")
 
-    # ── Connexion (Transaction Pooler: pas de prepared statements) ────────────
     conn = psycopg2.connect(DB_URL)
     conn.autocommit = False
     cur = conn.cursor()
 
-    # =========================================================================
-    # 1. MERCHANTS
-    # =========================================================================
-    merchant_info: dict[str, dict] = {}  # name → {slug, region, country}
+    print("Verification du schema...")
+    ensure_schema(cur)
+    conn.commit()
+
+    # MERCHANTS
+    merchant_info = {}
     for r in rows:
         name = r.get("merchant", "").strip()
         if not name or name in merchant_info:
@@ -112,7 +145,8 @@ def main():
         cur,
         """INSERT INTO merchants (name, slug, region, country)
            VALUES %s
-           ON CONFLICT (name) DO UPDATE SET
+           ON CONFLICT (slug) DO UPDATE SET
+             name    = EXCLUDED.name,
              region  = COALESCE(EXCLUDED.region,  merchants.region),
              country = COALESCE(EXCLUDED.country, merchants.country)""",
         [
@@ -122,13 +156,11 @@ def main():
     )
 
     cur.execute("SELECT id, name FROM merchants")
-    merchant_map: dict[str, int] = {nm: mid for mid, nm in cur.fetchall()}
+    merchant_map = {nm: mid for mid, nm in cur.fetchall()}
     print(f"  {len(merchant_info):,} marchands ({len(merchant_map):,} en base)")
 
-    # =========================================================================
-    # 2. PRODUCTS  — un produit par item_id Flipp, stocké dans barcode
-    # =========================================================================
-    products_seen: dict[str, dict] = {}   # item_id → {name, brand, image_url}
+    # PRODUCTS
+    products_seen = {}
     for r in rows:
         iid = r.get("item_id", "").strip()
         if not iid or iid in products_seen:
@@ -144,9 +176,9 @@ def main():
             info["name"],
             info["brand"],
             info["image_url"],
-            "Groceries",  # category
-            "CA",         # country
-            iid,          # barcode = Flipp item_id (unique key for upsert)
+            "Groceries",
+            "CA",
+            iid,
         )
         for iid, info in products_seen.items()
         if info["name"]
@@ -163,11 +195,10 @@ def main():
         product_rows,
         page_size=2000,
     )
-    print(f"  {len(product_rows):,} produits upsertés")
+    print(f"  {len(product_rows):,} produits upserted")
 
-    # Récupérer le mapping barcode → product_id
     all_barcodes = list(products_seen.keys())
-    product_map: dict[str, int] = {}
+    product_map = {}
     BATCH = 5000
     for i in range(0, len(all_barcodes), BATCH):
         cur.execute(
@@ -176,11 +207,9 @@ def main():
         )
         for pid, bc in cur.fetchall():
             product_map[bc] = pid
-    print(f"  {len(product_map):,} produits mappés")
+    print(f"  {len(product_map):,} produits mappes")
 
-    # =========================================================================
-    # 3. PRICES
-    # =========================================================================
+    # PRICES
     price_rows = []
     skipped = 0
     for r in rows:
@@ -212,11 +241,11 @@ def main():
         price_rows.append((
             product_id,
             merchant_id,
-            price,        # regular_price (Flipp doesn't distinguish sale vs regular)
+            price,
             valid_from,
             valid_to,
-            r.get("image_url") or None,  # source_url
-            "CA",         # country
+            r.get("image_url") or None,
+            "CA",
         ))
 
     execute_values(
@@ -228,12 +257,12 @@ def main():
         price_rows,
         page_size=2000,
     )
-    print(f"  {len(price_rows):,} prix importés ({skipped} ignorés)")
+    print(f"  {len(price_rows):,} prix importes ({skipped} ignores)")
 
     conn.commit()
     cur.close()
     conn.close()
-    print("\n✓ Import terminé avec succès.")
+    print("\nImport termine avec succes.")
 
 
 if __name__ == "__main__":
