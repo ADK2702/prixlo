@@ -40,9 +40,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PRIXLO_USER_AGENT: 'PrixloBot/1.0 (prixlo.ca; hello@prixlo.ca)'
         run: |
-          echo "Scraper placeholder — replace with: python scrapers/run_all.py"
-          echo "DATABASE_URL is set: ${{ secrets.DATABASE_URL != '' }}"
-          # python scrapers/run_all.py
+          python scrapers/run_all.py
 
       # ── 5. Trigger Vercel redeploy (busts ISR/Edge cache) ─────────────────
       - name: Redeploy to Vercel
