@@ -1,0 +1,52 @@
+name: Weekly Flipp Sync
+
+on:
+  schedule:
+    # Chaque lundi à 06h00 UTC (= dimanche soir heure EST)
+    # Les circulaires canadiens changent généralement le jeudi/vendredi
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+    # Déclenchement manuel depuis GitHub Actions
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90   # Le collecteur prend ~30-45 min
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install requests psycopg2-binary python-dotenv
+
+      - name: Collect Flipp data
+        run: python collector.py
+        # collector.py sauvegarde canada_flipp_YYYYMMDD_HHMM.csv
+
+      - name: Import to Supabase
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python import_db.py
+
+      - name: Upload CSV artifact (30 days)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flipp-data-${{ github.run_id }}
+          path: canada_flipp_*.csv
+          retention-days: 30
+
+      - name: Upload summary artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flipp-summary-${{ github.run_id }}
+          path: canada_summary_*.json
+          retention-days: 30

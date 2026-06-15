@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Épicerie Promo — Meilleurs prix épicerie Canada';
+export const alt = 'Prixlo — Meilleurs prix épicerie Canada';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -33,7 +33,7 @@ export default function OgImage() {
           fontSize: 80, fontWeight: 900, color: '#fff',
           letterSpacing: '-2px', marginBottom: 16,
         }}>
-          🛒 Épicerie Promo
+          🛒 Prixlo
         </div>
 
         {/* Tagline */}
