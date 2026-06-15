@@ -6,8 +6,8 @@ Cluster similar products across merchants and assign cluster_id in the prices ta
 Algorithm:
   1. Load all distinct (name, brand) pairs from prices (active + expired)
   2. Compute a normalize_key per item: lowercase, remove accents, strip sizes/quantities,
-     sort words alphabetically â order-invariant key
-  3. Group by (brand_key, name_key) â exact match first (handles ~90% of duplicates)
+     sort words alphabetically Ã¢ÂÂ order-invariant key
+  3. Group by (brand_key, name_key) Ã¢ÂÂ exact match first (handles ~90% of duplicates)
   4. Fuzzy pass within same brand_key: merge groups with token_set_ratio >= THRESHOLD
   5. Insert canonical clusters into product_clusters
   6. UPDATE prices SET cluster_id = ...
@@ -38,7 +38,7 @@ BRAND_WEIGHT    = True  # only fuzzy-match within same brand group
 # ---------------------------------------------------------------------------
 SIZE_PATTERN = re.compile(
     r'\b\d+(\.\d+)?\s*'
-    r'(kg|g|gr|lb|oz|l|ml|lt|litre|liter|pk|pack|ct|un|unitÃ©s?|piÃ¨ces?|pieces?|x\d+|\d+x)\b',
+    r'(kg|g|gr|lb|oz|l|ml|lt|litre|liter|pk|pack|ct|un|unitÃÂ©s?|piÃÂ¨ces?|pieces?|x\d+|\d+x)\b',
     re.IGNORECASE
 )
 NUMBER_PATTERN  = re.compile(r'\b\d+\b')
@@ -48,7 +48,7 @@ SPACE_PATTERN   = re.compile(r'\s+')
 STOP_WORDS = {
     'de', 'du', 'des', 'le', 'la', 'les', 'un', 'une', 'en', 'et', 'ou',
     'with', 'of', 'the', 'and', 'or', 'for', 'a', 'an',
-    'sans', 'avec', 'Ã ', 'au', 'aux',
+    'sans', 'avec', 'ÃÂ ', 'au', 'aux',
 }
 
 
@@ -93,14 +93,14 @@ def main():
         from rapidfuzz import fuzz
         HAS_RAPIDFUZZ = True
     except ImportError:
-        print("WARNING: rapidfuzz not installed â skipping fuzzy pass. pip install rapidfuzz")
+        print("WARNING: rapidfuzz not installed Ã¢ÂÂ skipping fuzzy pass. pip install rapidfuzz")
         HAS_RAPIDFUZZ = False
 
     conn = psycopg2.connect(DATABASE_URL)
     conn.autocommit = False
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-    print("Loading distinct (name, brand) pairs from pricesâ¦")
+    print("Loading distinct (name, brand) pairs from pricesÃ¢ÂÂ¦")
     cur.execute("""
         SELECT ARRAY_AGG(pr.id) AS ids, p.name, p.brand
         FROM prices pr
@@ -115,14 +115,14 @@ def main():
     # Step 1: compute keys + group by exact key
     # ------------------------------------------------------------------
     # clusters: list of {ids, canonical_name, canonical_brand, name_key, brand_k}
-    # exact_map: (brand_k, name_k) â cluster index
+    # exact_map: (brand_k, name_k) Ã¢ÂÂ cluster index
     clusters      = []
     exact_map     = {}
 
     for row in rows:
         bk = brand_key(row['brand'])
         nk = normalize_key(row['name'], row['brand'])
-        if not nk:          # empty key â use first 3 words of name
+        if not nk:          # empty key Ã¢ÂÂ use first 3 words of name
             nk = ' '.join(sorted(remove_accents(row['name']).lower().split())[:3])
 
         key = (bk, nk)
@@ -144,7 +144,7 @@ def main():
     # Step 2: fuzzy pass within same brand group
     # ------------------------------------------------------------------
     if HAS_RAPIDFUZZ and len(clusters) > 1:
-        print("Running fuzzy merge passâ¦")
+        print("Running fuzzy merge passÃ¢ÂÂ¦")
         t0 = time.time()
 
         # Group cluster indices by brand
@@ -194,17 +194,17 @@ def main():
                 root_to_cluster[r]['ids'].extend(cl['ids'])
 
         clusters = list(root_to_cluster.values())
-        print(f"  Fuzzy merged {merged} pairs â {len(clusters)} final clusters  ({time.time()-t0:.1f}s)")
+        print(f"  Fuzzy merged {merged} pairs Ã¢ÂÂ {len(clusters)} final clusters  ({time.time()-t0:.1f}s)")
 
     # ------------------------------------------------------------------
     # Step 3: insert clusters + update prices
     # ------------------------------------------------------------------
-    print("Clearing old clustersâ¦")
+    print("Clearing old clustersÃ¢ÂÂ¦")
     cur.execute("UPDATE prices SET cluster_id = NULL")
     cur.execute("DELETE FROM product_clusters")
     cur.execute("ALTER SEQUENCE product_clusters_id_seq RESTART WITH 1")
 
-    print(f"Inserting {len(clusters)} clustersâ¦")
+    print(f"Inserting {len(clusters)} clustersÃ¢ÂÂ¦")
     insert_sql = """
         INSERT INTO product_clusters (canonical_name, canonical_brand)
         VALUES (%s, %s) RETURNING id
@@ -249,4 +249,5 @@ def main():
     conn.close()
 
 
-if __name__ == '__m
+if __name__ == '__main__':
+    main()
