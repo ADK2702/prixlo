@@ -135,7 +135,7 @@ def main():
             continue
         products_seen[iid] = {
             "name":      (r.get("name") or "").strip(),
-            "brand":     (r.get("brand") or "").strip() or None,
+            "brand":     ((r.get("brand") or "").strip()[:120] or None),
             "image_url": r.get("image_url") or None,
         }
 
