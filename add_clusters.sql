@@ -1,5 +1,5 @@
 -- Migration: product clusters + clustering support
--- Run ONCE against the epicerie DB
+-- Run ONCE against the prixlo DB
 
 -- 1. Clusters table
 CREATE TABLE IF NOT EXISTS product_clusters (

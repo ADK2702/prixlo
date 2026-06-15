@@ -1,6 +1,6 @@
 -- schema.sql
 -- Schéma PostgreSQL — agrégateur de promos épicerie Canada
--- Usage: psql -d epicerie -f schema.sql
+-- Usage: psql -d prixlo -f schema.sql
 
 CREATE EXTENSION IF NOT EXISTS unaccent;
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
