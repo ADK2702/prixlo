@@ -16,25 +16,23 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      # ── 1. Checkout ────────────────────────────────────────────────────────────────────
+      # ── 1. Checkout ─────────────────────────────────────────────────────────────
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ── 2. Setup Python for scraper ─────────────────────────────────────────────────
+      # ── 2. Setup Python for scraper ──────────────────────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: pip
+          cache: 'pip'
+          cache-dependency-path: scrapers/requirements.txt
 
-      # ── 3. Install scraper dependencies ──────────────────────────────────────────────
+      # ── 3. Install scraper dependencies ──────────────────────────────────────────
       - name: Install scraper deps
-        run: |
-          pip install requests beautifulsoup4 psycopg2-binary python-dotenv
-        # Add your scraper's requirements.txt here once it exists:
-        # run: pip install -r scrapers/requirements.txt
+        run: pip install -r scrapers/requirements.txt
 
-      # ── 4. Run scraper (identified as PrixloBot/1.0) ──────────────────────────────────────────
+      # ── 4. Run scraper (identified as PrixloBot/1.0) ───────────────────────────────────
       - name: Run circulaire scraper
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -42,7 +40,7 @@ jobs:
         run: |
           python scrapers/run_all.py
 
-      # ── 5. Trigger Vercel redeploy (busts ISR/Edge cache) ───────────────────────
+      # ── 5. Trigger Vercel redeploy (busts ISR/Edge cache) ─────────────────────────
       - name: Redeploy to Vercel
         env:
           VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
@@ -54,7 +52,7 @@ jobs:
             echo "VERCEL_DEPLOY_HOOK not set -- skipping redeploy"
           fi
 
-      # ── 6. Health check — verify data is fresh ────────────────────────────────────
+      # ── 6. Health check — verify data is fresh ─────────────────────────────────────
       - name: Wait for deployment
         run: sleep 30
 
@@ -73,12 +71,8 @@ jobs:
           fi
           echo "Data is fresh (or health endpoint not yet reachable)"
 
-      # ── 7. Notify on failure ─────────────────────────────────────────────────────────
+      # ── 7. Notify on failure ──────────────────────────────────────────────────────
       - name: Notify on failure
         if: failure()
         run: |
           echo "Scrape or health check failed -- add Slack/email notification here"
-          # Example with curl to a Slack webhook:
-          # curl -s -X POST "${{ secrets.SLACK_WEBHOOK }}" \
-          #   -H "Content-Type: application/json" \
-          #   -d '{"text":"Prixlo scrape failed! Check GitHub Actions."}'
