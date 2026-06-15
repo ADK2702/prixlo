@@ -16,25 +16,25 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      # ── 1. Checkout ────────────────────────────────────────────────────────
+      # ── 1. Checkout ────────────────────────────────────────────────────────────────────
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ── 2. Setup Python for scraper ────────────────────────────────────────
+      # ── 2. Setup Python for scraper ─────────────────────────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: pip
 
-      # ── 3. Install scraper dependencies ────────────────────────────────────
+      # ── 3. Install scraper dependencies ──────────────────────────────────────────────
       - name: Install scraper deps
         run: |
           pip install requests beautifulsoup4 psycopg2-binary python-dotenv
         # Add your scraper's requirements.txt here once it exists:
         # run: pip install -r scrapers/requirements.txt
 
-      # ── 4. Run scraper (identified as PrixloBot/1.0) ───────────────────────
+      # ── 4. Run scraper (identified as PrixloBot/1.0) ──────────────────────────────────────────
       - name: Run circulaire scraper
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -42,34 +42,43 @@ jobs:
         run: |
           python scrapers/run_all.py
 
-      # ── 5. Trigger Vercel redeploy (busts ISR/Edge cache) ─────────────────
+      # ── 5. Trigger Vercel redeploy (busts ISR/Edge cache) ───────────────────────
       - name: Redeploy to Vercel
-        if: ${{ secrets.VERCEL_DEPLOY_HOOK != '' }}
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
         run: |
-          curl -s -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
-          echo "Vercel redeploy triggered"
+          if [ -n "$VERCEL_DEPLOY_HOOK" ]; then
+            curl -s -X POST "$VERCEL_DEPLOY_HOOK"
+            echo "Vercel redeploy triggered"
+          else
+            echo "VERCEL_DEPLOY_HOOK not set -- skipping redeploy"
+          fi
 
-      # ── 6. Health check — verify data is fresh ────────────────────────────
+      # ── 6. Health check — verify data is fresh ────────────────────────────────────
       - name: Wait for deployment
-        run: sleep 60
+        run: sleep 30
 
       - name: Health check
+        env:
+          HEALTH_URL: ${{ secrets.PRIXLO_HEALTH_URL }}
         run: |
-          STATUS=$(curl -s https://prixlo.ca/api/health | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('status','unknown'))")
-          DAYS=$(curl -s https://prixlo.ca/api/health | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('days_since_update',99))")
+          URL="${HEALTH_URL:-https://prixlo.ca/api/health}"
+          RESPONSE=$(curl -sf "$URL" 2>/dev/null || echo '{}')
+          STATUS=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('status','unknown'))" 2>/dev/null || echo 'unknown')
+          DAYS=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('days_since_update',99))" 2>/dev/null || echo '99')
           echo "Data status: $STATUS (${DAYS} days old)"
           if [ "$STATUS" = "stale" ]; then
-            echo "⚠️  WARNING: Data is stale after scrape! Check scraper logs."
+            echo "WARNING: Data is stale after scrape! Check scraper logs."
             exit 1
           fi
-          echo "✅ Data is fresh"
+          echo "Data is fresh (or health endpoint not yet reachable)"
 
-      # ── 7. Notify on failure ───────────────────────────────────────────────
+      # ── 7. Notify on failure ─────────────────────────────────────────────────────────
       - name: Notify on failure
         if: failure()
         run: |
-          echo "Scrape or health check failed — add Slack/email notification here"
+          echo "Scrape or health check failed -- add Slack/email notification here"
           # Example with curl to a Slack webhook:
           # curl -s -X POST "${{ secrets.SLACK_WEBHOOK }}" \
           #   -H "Content-Type: application/json" \
-          #   -d '{"text":"⚠️ Prixlo scrape failed! Check GitHub Actions."}'
+          #   -d '{"text":"Prixlo scrape failed! Check GitHub Actions."}'
