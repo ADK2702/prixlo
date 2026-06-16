@@ -1,15 +1,15 @@
 name: Weekly Price Refresh
 
+# Désactivé (schedule retiré) — pipeline complet géré par scrape.yml
+# Disponible en déclenchement manuel uniquement.
+
 on:
-  schedule:
-    # Every Monday at 06:00 UTC (02:00 EST / 03:00 EDT)
-    - cron: '0 6 * * 1'
-  workflow_dispatch:  # Allow manual trigger from GitHub UI
+  workflow_dispatch:
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90
 
     steps:
       - name: Checkout
@@ -21,38 +21,27 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install Python dependencies
-        run: |
-          pip install psycopg2-binary rapidfuzz python-dotenv requests
+      - name: Install dependencies
+        run: pip install psycopg2-binary rapidfuzz python-dotenv requests
 
-      - name: Create .env for import scripts
-        run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > webapp/.env.local
+      - name: Collect Flipp data
+        run: python collector.py
 
-      - name: Import flyer data
+      - name: Import to Supabase
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python import_db.py
+
+      - name: Normalize & cluster
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-      - name: Normalize & cluster products
         run: python normalize_products.py
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Refresh FTS index
-        run: |
-          psql "$DATABASE_URL" -c "REINDEX INDEX CONCURRENTLY idx_prices_fts;"
+      - name: Trigger Vercel redeploy
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-      - name: Report row counts
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
         run: |
-          psql "$DATABASE_URL" -c "
-            SELECT COUNT(*) AS total_prices,
-                   COUNT(DISTINCT merchant_id) AS merchants,
-                   COUNT(DISTINCT cluster_id) AS clusters
-            FROM prices
-            WHERE (valid_to IS NULL OR valid_to >= CURRENT_DATE);
-          "
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          if [ -n "$VERCEL_DEPLOY_HOOK" ]; then
+            curl -s -X POST "$VERCEL_DEPLOY_HOOK"
+            echo "Vercel redeploy triggered"
+          fi
